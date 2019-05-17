@@ -7,4 +7,6 @@ import ap.springframework.domain.Recipe;
 public interface RecipeService {
 
 	Set<Recipe> getRecipes();
+	
+	Recipe findById(Long l);
 }
