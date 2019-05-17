@@ -1,35 +1,46 @@
 package ap.springframework.service;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.*;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
+import ap.springframework.converters.RecipeCommandToRecipe;
+import ap.springframework.converters.RecipeToRecipeCommand;
 import ap.springframework.domain.Recipe;
 import ap.springframework.repositories.RecipeRepository;
-import ap.springframework.services.RecipeService;
 import ap.springframework.services.RecipeServiceImpl;
 
 public class RecipeServiceImplTest {
 
-	RecipeService recipeService;
+	RecipeServiceImpl recipeService;
 
 	@Mock
 	RecipeRepository recipeRepository;
+
+	@Mock
+	RecipeToRecipeCommand recipeToRecipeCommand;
+
+	@Mock
+	RecipeCommandToRecipe recipeCommandToRecipe;
 
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
-		recipeService = new RecipeServiceImpl(recipeRepository);
+		recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipe, recipeToRecipeCommand);
 	}
 
 	@Test
